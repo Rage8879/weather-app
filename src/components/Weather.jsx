@@ -6,7 +6,7 @@ import './Weather.css';
 
 
 // Weather component handles fetching and displaying weather data
-const Weather = ({ onWeatherChange }) => {
+const Weather = () => {
   // State for city input
   const [city, setCity] = useState('');
   // State for fetched weather data
@@ -25,15 +25,11 @@ const Weather = ({ onWeatherChange }) => {
   const fetchWeather = async (selectedCity) => {
     try {
       const response = await axios.get(`/weather?city=${encodeURIComponent(selectedCity)}`);
-      setWeatherData(response.data);
-      setError(null);
-      if (onWeatherChange && response.data && response.data.weather && response.data.weather[0]) {
-        onWeatherChange(response.data.weather[0].main);
-      }
+  setWeatherData(response.data);
+  setError(null);
     } catch (err) {
   setError('City not found');
   setWeatherData(null);
-  if (onWeatherChange) onWeatherChange(null);
     }
   };
 
@@ -45,9 +41,29 @@ const Weather = ({ onWeatherChange }) => {
     }
   };
 
-  // Get weather icon URL from OpenWeatherMap
-  const getWeatherIcon = (iconCode) => {
-    return `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+  // Get animated weather icon from Flaticon (or fallback to OpenWeatherMap)
+  const getWeatherIcon = (weather) => {
+    if (!weather) return '';
+    const main = weather.main.toLowerCase();
+    // Example Flaticon animated icons (replace with your preferred animated icon URLs)
+    const iconMap = {
+      thunderstorm: 'https://cdn.jsdelivr.net/gh/manifestinteractive/weather-underground-icons/svg/wi-thunderstorm.svg',
+      drizzle: 'https://cdn.jsdelivr.net/gh/manifestinteractive/weather-underground-icons/svg/wi-sprinkle.svg',
+      rain: 'https://cdn.jsdelivr.net/gh/manifestinteractive/weather-underground-icons/svg/wi-rain.svg',
+      snow: 'https://cdn.jsdelivr.net/gh/manifestinteractive/weather-underground-icons/svg/wi-snow.svg',
+      clear: 'https://cdn.jsdelivr.net/gh/manifestinteractive/weather-underground-icons/svg/wi-day-sunny.svg',
+      clouds: 'https://cdn.jsdelivr.net/gh/manifestinteractive/weather-underground-icons/svg/wi-cloudy.svg',
+      mist: 'https://cdn.jsdelivr.net/gh/manifestinteractive/weather-underground-icons/svg/wi-fog.svg',
+      smoke: 'https://cdn.jsdelivr.net/gh/manifestinteractive/weather-underground-icons/svg/wi-smoke.svg',
+      haze: 'https://cdn.jsdelivr.net/gh/manifestinteractive/weather-underground-icons/svg/wi-day-haze.svg',
+      dust: 'https://cdn.jsdelivr.net/gh/manifestinteractive/weather-underground-icons/svg/wi-dust.svg',
+      fog: 'https://cdn.jsdelivr.net/gh/manifestinteractive/weather-underground-icons/svg/wi-fog.svg',
+      sand: 'https://cdn.jsdelivr.net/gh/manifestinteractive/weather-underground-icons/svg/wi-sandstorm.svg',
+      ash: 'https://cdn.jsdelivr.net/gh/manifestinteractive/weather-underground-icons/svg/wi-volcano.svg',
+      squall: 'https://cdn.jsdelivr.net/gh/manifestinteractive/weather-underground-icons/svg/wi-strong-wind.svg',
+      tornado: 'https://cdn.jsdelivr.net/gh/manifestinteractive/weather-underground-icons/svg/wi-tornado.svg',
+    };
+    return iconMap[main] || `https://openweathermap.org/img/wn/${weather.icon}@2x.png`;
   };
 
   // Render the weather app UI
@@ -72,7 +88,7 @@ const Weather = ({ onWeatherChange }) => {
         <h2>{weatherData.name}</h2>
         <div className="weather-main">
           <img
-            src={getWeatherIcon(weatherData.weather[0].icon)}
+            src={getWeatherIcon(weatherData.weather[0])}
             alt={weatherData.weather[0].description}
           />
           <p className="temperature">{Math.round(weatherData.main.temp)}°C</p>
