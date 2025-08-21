@@ -1,6 +1,5 @@
-// Cloudflare Pages Function: /weather
-// This function acts as a secure proxy to the OpenWeatherMap API.
-// It reads the API key from environment variables and never exposes it to the client.
+// Cloudflare Pages Function: /suggestions
+// This function fetches city suggestions from the OpenWeatherMap API.
 
 export async function onRequest(context) {
   // CORS headers
@@ -16,11 +15,12 @@ export async function onRequest(context) {
     return new Response(null, { headers: corsHeaders });
   }
 
-  // Get the city from the query string
+  // Get the query from the URL
   const { searchParams } = new URL(context.request.url);
-  const city = searchParams.get('city');
-  if (!city) {
-    return new Response(JSON.stringify({ error: 'City is required' }), {
+  const query = searchParams.get('q');
+  
+  if (!query) {
+    return new Response(JSON.stringify({ error: 'Query is required' }), {
       status: 400,
       headers: corsHeaders,
     });
@@ -36,10 +36,10 @@ export async function onRequest(context) {
   }
 
   try {
-    // Build the OpenWeatherMap API URL
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric`;
+    // Build the OpenWeatherMap API URL for city suggestions
+    const url = `https://api.openweathermap.org/data/2.5/find?q=${encodeURIComponent(query)}&type=like&sort=population&cnt=5&appid=${apiKey}`;
 
-    // Fetch weather data from OpenWeatherMap
+    // Fetch suggestions from OpenWeatherMap
     const apiRes = await fetch(url);
     const data = await apiRes.json();
     
@@ -48,7 +48,7 @@ export async function onRequest(context) {
       headers: corsHeaders,
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: 'Failed to fetch weather data' }), {
+    return new Response(JSON.stringify({ error: 'Failed to fetch suggestions' }), {
       status: 500,
       headers: corsHeaders,
     });

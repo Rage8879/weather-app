@@ -16,9 +16,6 @@ const Weather = () => {
   // State for city suggestions
   const [suggestions, setSuggestions] = useState([]);
 
-  // OpenWeatherMap API key from environment variable
-  const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
-
   // Handle input change and fetch city suggestions
   const handleInputChange = async (e) => {
     const value = e.target.value;
@@ -27,10 +24,8 @@ const Weather = () => {
     // Fetch suggestions if input length > 2
     if (value.length > 2) {
       try {
-        const response = await axios.get(
-          `http://api.openweathermap.org/data/2.5/find?q=${value}&type=like&sort=population&cnt=5&appid=${apiKey}`
-        );
-        setSuggestions(response.data.list);
+        const response = await axios.get(`/suggestions?q=${encodeURIComponent(value)}`);
+        setSuggestions(response.data.list || []);
       } catch (err) {
         setSuggestions([]);
       }
@@ -49,7 +44,7 @@ const Weather = () => {
   // Fetch weather data for a city using the Cloudflare Function
   const fetchWeather = async (selectedCity) => {
     try {
-      const response = await axios.get(`/api/weather?city=${encodeURIComponent(selectedCity)}`);
+      const response = await axios.get(`/weather?city=${encodeURIComponent(selectedCity)}`);
       setWeatherData(response.data);
       setError(null);
     } catch (err) {
@@ -68,7 +63,7 @@ const Weather = () => {
 
   // Get weather icon URL from OpenWeatherMap
   const getWeatherIcon = (iconCode) => {
-    return `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
+    return `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
   };
 
   // Render the weather app UI
