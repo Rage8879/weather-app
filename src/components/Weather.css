@@ -69,7 +69,7 @@ button:hover {
   width: 100vw;
   height: 100vh;
   z-index: -1;
-  pointer-events: none;
+  overflow: hidden;
 }
 
 /* Thunderstorm */
@@ -78,9 +78,11 @@ button:hover {
   height: 100vh;
   background: linear-gradient(180deg, #232526 0%, #414345 100%);
   overflow: hidden;
+  position: relative;
 }
 .thunderstorm-bg .rain {
   position: absolute;
+  top: 0; left: 0;
   width: 100vw;
   height: 100vh;
   background: repeating-linear-gradient(
@@ -91,14 +93,17 @@ button:hover {
     transparent 10px
   );
   animation: rain-fall 0.5s linear infinite;
+  pointer-events: none;
 }
 .thunderstorm-bg .lightning {
   position: absolute;
+  top: 0; left: 0;
   width: 100vw;
   height: 100vh;
   background: rgba(255,255,255,0.2);
   opacity: 0;
   animation: lightning-flash 3s infinite;
+  pointer-events: none;
 }
 @keyframes rain-fall {
   0% { background-position-y: 0; }
@@ -116,9 +121,11 @@ button:hover {
   height: 100vh;
   background: linear-gradient(180deg, #485563 0%, #29323c 100%);
   overflow: hidden;
+  position: relative;
 }
 .rain-bg .rain {
   position: absolute;
+  top: 0; left: 0;
   width: 100vw;
   height: 100vh;
   background: repeating-linear-gradient(
@@ -129,6 +136,7 @@ button:hover {
     transparent 12px
   );
   animation: rain-fall 0.7s linear infinite;
+  pointer-events: none;
 }
 
 /* Snow */
@@ -137,13 +145,16 @@ button:hover {
   height: 100vh;
   background: linear-gradient(180deg, #e0eafc 0%, #cfdef3 100%);
   overflow: hidden;
+  position: relative;
 }
 .snow-bg .snow {
   position: absolute;
+  top: 0; left: 0;
   width: 100vw;
   height: 100vh;
   background: repeating-radial-gradient(circle, #fff 0 2px, transparent 3px 40px);
   animation: snow-fall 2s linear infinite;
+  pointer-events: none;
 }
 @keyframes snow-fall {
   0% { background-position-y: 0; }
@@ -156,18 +167,20 @@ button:hover {
   height: 100vh;
   background: linear-gradient(180deg, #56ccf2 0%, #2f80ed 100%);
   overflow: hidden;
+  position: relative;
 }
 .clear-bg .sun {
   position: absolute;
-  top: 10vh;
-  left: 50vw;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 120px;
   height: 120px;
-  margin-left: -60px;
   background: radial-gradient(circle, #fff700 60%, #ffe066 100%);
   border-radius: 50%;
   box-shadow: 0 0 60px 20px #fff70099;
   animation: sun-glow 3s ease-in-out infinite alternate;
+  pointer-events: none;
 }
 @keyframes sun-glow {
   0% { box-shadow: 0 0 60px 20px #fff70099; }
@@ -175,16 +188,19 @@ button:hover {
 }
 
 /* Clouds */
+  
 .clouds-bg {
   width: 100vw;
   height: 100vh;
   background: linear-gradient(180deg, #bdc3c7 0%, #2c3e50 100%);
   overflow: hidden;
+  position: relative;
 }
 .clouds-bg .clouds {
   position: absolute;
-  top: 20vh;
-  left: 30vw;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 300px;
   height: 100px;
   background: #fff;
@@ -192,6 +208,12 @@ button:hover {
   box-shadow: 60px 0 80px 20px #fff, 120px 0 100px 30px #fff;
   opacity: 0.7;
   animation: clouds-move 10s linear infinite alternate;
+  pointer-events: none;
+}
+body, html {
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
 }
 @keyframes clouds-move {
   0% { left: 20vw; }
