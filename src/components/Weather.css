@@ -79,51 +79,89 @@ body, html {
   border-radius: 10px;
 }
   
-/* Weather info container */
-.weather-info {
-  margin-top: 20px;
-}
 
-/* City name styling */
-.weather-info h2 {
-  font-size: 32px;
-  font-weight: 600;
-  margin-bottom: 10px;
+/* Modern Weather UI */
+.weather-info-modern {
+  margin-top: 32px;
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 4px 32px 0 rgba(31, 38, 135, 0.10);
+  padding: 32px 24px 24px 24px;
+  max-width: 350px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-  
-/* Main weather row (icon + temp) */
-.weather-main {
+.weather-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.weather-header .city {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222c3c;
+  margin-bottom: 2px;
+}
+.weather-header .desc {
+  font-size: 1rem;
+  color: #4e8cff;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+}
+.weather-main-modern {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.weather-main-modern lord-icon {
+  margin-bottom: 8px;
+}
+.temp-block {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-  
-/* Temperature text */
-.temperature {
-  font-size: 80px;
+.temperature-modern {
+  font-size: 3rem;
   font-weight: 700;
-  margin-left: 10px;
+  color: #222c3c;
 }
-  
-/* Weather description */
-.weather-info > p {
-  text-transform: capitalize;
-  font-size: 20px;
-  margin-top: -10px;
-}
-
-/* Weather details row (humidity, wind) */
-.weather-details {
+.weather-details-modern {
   display: flex;
-  justify-content: space-around;
-  margin-top: 30px;
-  background: rgba(255, 255, 255, 0.2);
-  padding: 20px;
-  border-radius: 15px;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+  gap: 16px;
 }
-
-/* Weather details text */
-.weather-details p {
-  font-size: 16px;
+.weather-details-modern > div {
+  background: #f4f8fb;
+  border-radius: 12px;
+  padding: 12px 18px;
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.weather-details-modern .label {
+  font-size: 0.9rem;
+  color: #4e8cff;
+  margin-bottom: 2px;
+}
+@media (max-width: 500px) {
+  .weather-info-modern {
+    padding: 18px 6px 12px 6px;
+    max-width: 98vw;
+  }
+  .weather-details-modern > div {
+    padding: 8px 4px;
+  }
+  .temperature-modern {
+    font-size: 2rem;
+  }
 }
   
