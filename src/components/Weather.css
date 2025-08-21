@@ -46,7 +46,8 @@ form {
   margin-bottom: 20px;
   position: relative;
 }
-  
+  z-index: 0;
+  pointer-events: none;
 /* Input box styling */
 input[type='text'] {
   padding: 15px;
@@ -106,6 +107,8 @@ button:hover {
   background: linear-gradient(180deg, #232526 0%, #414345 100%);
   overflow: hidden;
   position: relative;
+  position: relative;
+  z-index: 2;
 }
 .thunderstorm-bg .rain {
   position: absolute;
