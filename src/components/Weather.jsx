@@ -12,24 +12,26 @@ const Weather = () => {
   const getWeatherIcon = (weather) => {
     if (!weather) return '';
     const main = weather.main.toLowerCase();
+    
+    // Simple SVG icons as fallback
     const iconMap = {
-      thunderstorm: 'https://cdn.lordicon.com/egiwmiit.json',
-      drizzle: 'https://cdn.lordicon.com/xjovhxra.json',
-      rain: 'https://cdn.lordicon.com/xjovhxra.json',
-      snow: 'https://cdn.lordicon.com/zpxybbhl.json',
-      clear: 'https://cdn.lordicon.com/etqbfrgp.json',
-      clouds: 'https://cdn.lordicon.com/abfverha.json',
-      mist: 'https://cdn.lordicon.com/abfverha.json',
-      smoke: 'https://cdn.lordicon.com/abfverha.json',
-      haze: 'https://cdn.lordicon.com/abfverha.json',
-      dust: 'https://cdn.lordicon.com/abfverha.json',
-      fog: 'https://cdn.lordicon.com/abfverha.json',
-      sand: 'https://cdn.lordicon.com/abfverha.json',
-      ash: 'https://cdn.lordicon.com/abfverha.json',
-      squall: 'https://cdn.lordicon.com/abfverha.json',
-      tornado: 'https://cdn.lordicon.com/abfverha.json',
+      thunderstorm: '⛈️',
+      drizzle: '🌦️',
+      rain: '🌧️',
+      snow: '❄️',
+      clear: '☀️',
+      clouds: '☁️',
+      mist: '🌫️',
+      smoke: '🌫️',
+      haze: '🌫️',
+      dust: '🌫️',
+      fog: '🌫️',
+      sand: '🌫️',
+      ash: '🌫️',
+      squall: '💨',
+      tornado: '🌪️',
     };
-    return iconMap[main];
+    return iconMap[main] || '🌤️';
   };
 
   const fetchWeather = async (selectedCity) => {
@@ -98,13 +100,9 @@ const Weather = () => {
           </div>
           
           <div className="weather-main">
-            <lord-icon
-              src={getWeatherIcon(weatherData.weather[0])}
-              trigger="loop"
-              delay="1000"
-              colors="primary:#6366f1,secondary:#f59e0b"
-              style={{ width: '120px', height: '120px' }}
-            ></lord-icon>
+            <div className="weather-icon">
+              {getWeatherIcon(weatherData.weather[0])}
+            </div>
             <div className="temperature">{Math.round(weatherData.main.temp)}°</div>
           </div>
 
