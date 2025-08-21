@@ -6,7 +6,7 @@ import './Weather.css';
 
 
 // Weather component handles fetching and displaying weather data
-const Weather = () => {
+const Weather = ({ onWeatherChange }) => {
   // State for city input
   const [city, setCity] = useState('');
   // State for fetched weather data
@@ -27,9 +27,13 @@ const Weather = () => {
       const response = await axios.get(`/weather?city=${encodeURIComponent(selectedCity)}`);
       setWeatherData(response.data);
       setError(null);
+      if (onWeatherChange && response.data && response.data.weather && response.data.weather[0]) {
+        onWeatherChange(response.data.weather[0].main);
+      }
     } catch (err) {
-      setError('City not found');
-      setWeatherData(null);
+  setError('City not found');
+  setWeatherData(null);
+  if (onWeatherChange) onWeatherChange(null);
     }
   };
 
@@ -59,12 +63,7 @@ const Weather = () => {
         />
         <button type="submit">Get Weather</button>
       </form>
-      {/* Animated weather background */}
-      <div className="weather-animation-bg">
-        {weatherData && (
-          <WeatherAnimation condition={weatherData.weather[0].main} />
-        )}
-      </div>
+  {/* Animated weather background is now handled globally */}
     {/* Error message */}
     {error && <p className="error">{error}</p>}
     {/* Weather info display */}
@@ -89,45 +88,7 @@ const Weather = () => {
   );
 };
 
-// WeatherAnimation component for background effects
-function WeatherAnimation({ condition }) {
-  switch (condition) {
-    case 'Thunderstorm':
-      return (
-        <div className="thunderstorm-bg">
-          <div className="rain"></div>
-          <div className="lightning"></div>
-        </div>
-      );
-    case 'Rain':
-    case 'Drizzle':
-      return (
-        <div className="rain-bg">
-          <div className="rain"></div>
-        </div>
-      );
-    case 'Snow':
-      return (
-        <div className="snow-bg">
-          <div className="snow"></div>
-        </div>
-      );
-    case 'Clear':
-      return (
-        <div className="clear-bg">
-          <div className="sun"></div>
-        </div>
-      );
-    case 'Clouds':
-      return (
-        <div className="clouds-bg">
-          <div className="clouds"></div>
-        </div>
-      );
-    default:
-      return null;
-  }
-}
+
 
 export default Weather;
       {/* Weather info display */}

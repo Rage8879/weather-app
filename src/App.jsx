@@ -1,17 +1,23 @@
 
 // Main App component imports
-import React from 'react';
+import React, { useState } from 'react';
 import Weather from './components/Weather';
+import WeatherAnimation from './components/WeatherAnimation';
 import './App.css';
 
 
 // App component renders the Weather component
 function App() {
+  const [weatherType, setWeatherType] = useState(null);
+  // Weather component will call this when weather changes
+  const handleWeatherChange = (type) => setWeatherType(type);
   return (
-    <div className="App">
-      {/* Weather dashboard */}
-      <Weather />
-    </div>
+    <>
+      <WeatherAnimation condition={weatherType} />
+      <div className="App">
+        <Weather onWeatherChange={handleWeatherChange} />
+      </div>
+    </>
   );
 }
 

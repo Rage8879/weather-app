@@ -1,3 +1,30 @@
+/* Foggy/Mist/Haze/Fog/Smoke/Dust/Sand/Ash */
+.foggy-bg {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(180deg, #b6bbc1 0%, #e0e0e0 100%);
+  overflow: hidden;
+  position: relative;
+}
+.foggy-bg .fog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80vw;
+  height: 40vh;
+  background: repeating-radial-gradient(circle, rgba(255,255,255,0.5) 0 30px, transparent 40px 80px);
+  opacity: 0.7;
+  border-radius: 50%;
+  filter: blur(10px);
+  animation: fog-move 8s linear infinite alternate;
+  pointer-events: none;
+}
+@keyframes fog-move {
+  0% { left: 45vw; opacity: 0.7; }
+  50% { left: 55vw; opacity: 0.9; }
+  100% { left: 45vw; opacity: 0.7; }
+}
 /* Main container for the weather app */
 .weather-container {
   max-width: 400px;
