@@ -13,33 +13,13 @@ const Weather = () => {
   const [weatherData, setWeatherData] = useState(null);
   // State for error messages
   const [error, setError] = useState(null);
-  // State for city suggestions
-  const [suggestions, setSuggestions] = useState([]);
 
-  // Handle input change and fetch city suggestions
-  const handleInputChange = async (e) => {
-    const value = e.target.value;
-    setCity(value);
-
-    // Fetch suggestions if input length > 2
-    if (value.length > 2) {
-      try {
-        const response = await axios.get(`/suggestions?q=${encodeURIComponent(value)}`);
-        setSuggestions(response.data.list || []);
-      } catch (err) {
-        setSuggestions([]);
-      }
-    } else {
-      setSuggestions([]);
-    }
+  // Handle input change
+  const handleInputChange = (e) => {
+    setCity(e.target.value);
   };
 
-  // Handle suggestion click and fetch weather for selected city
-  const handleSuggestionClick = (suggestion) => {
-    setCity(suggestion.name);
-    setSuggestions([]);
-    fetchWeather(suggestion.name);
-  };
+
 
   // Fetch weather data for a city using the Cloudflare Function
   const fetchWeather = async (selectedCity) => {
@@ -79,41 +59,75 @@ const Weather = () => {
         />
         <button type="submit">Get Weather</button>
       </form>
-      {/* Suggestions dropdown */}
-      {suggestions.length > 0 && (
-        <ul className="suggestions">
-          {suggestions.map((suggestion) => (
-            <li
-              key={suggestion.id}
-              onClick={() => handleSuggestionClick(suggestion)}
-            >
-              {suggestion.name}, {suggestion.sys.country}
-            </li>
-          ))}
-        </ul>
-      )}
-      {/* Error message */}
-      {error && <p className="error">{error}</p>}
-      {/* Weather info display */}
-      {weatherData && (
-        <div className="weather-info">
-          <h2>{weatherData.name}</h2>
-          <div className="weather-main">
-            <img
-              src={getWeatherIcon(weatherData.weather[0].icon)}
-              alt={weatherData.weather[0].description}
-            />
-            <p className="temperature">{Math.round(weatherData.main.temp)}°C</p>
-          </div>
-          <p>{weatherData.weather[0].description}</p>
-          <div className="weather-details">
-            <p>Humidity: {weatherData.main.humidity}%</p>
-            <p>Wind Speed: {weatherData.wind.speed} m/s</p>
-          </div>
+      {/* Animated weather background */}
+      <div className="weather-animation-bg">
+        {weatherData && (
+          <WeatherAnimation condition={weatherData.weather[0].main} />
+        )}
+      </div>
+    {/* Error message */}
+    {error && <p className="error">{error}</p>}
+    {/* Weather info display */}
+    {weatherData && (
+      <div className="weather-info">
+        <h2>{weatherData.name}</h2>
+        <div className="weather-main">
+          <img
+            src={getWeatherIcon(weatherData.weather[0].icon)}
+            alt={weatherData.weather[0].description}
+          />
+          <p className="temperature">{Math.round(weatherData.main.temp)}°C</p>
         </div>
-      )}
-    </div>
+        <p>{weatherData.weather[0].description}</p>
+        <div className="weather-details">
+          <p>Humidity: {weatherData.main.humidity}%</p>
+          <p>Wind Speed: {weatherData.wind.speed} m/s</p>
+        </div>
+      </div>
+    )}
+  </div>
   );
 };
 
+// WeatherAnimation component for background effects
+function WeatherAnimation({ condition }) {
+  switch (condition) {
+    case 'Thunderstorm':
+      return (
+        <div className="thunderstorm-bg">
+          <div className="rain"></div>
+          <div className="lightning"></div>
+        </div>
+      );
+    case 'Rain':
+    case 'Drizzle':
+      return (
+        <div className="rain-bg">
+          <div className="rain"></div>
+        </div>
+      );
+    case 'Snow':
+      return (
+        <div className="snow-bg">
+          <div className="snow"></div>
+        </div>
+      );
+    case 'Clear':
+      return (
+        <div className="clear-bg">
+          <div className="sun"></div>
+        </div>
+      );
+    case 'Clouds':
+      return (
+        <div className="clouds-bg">
+          <div className="clouds"></div>
+        </div>
+      );
+    default:
+      return null;
+  }
+}
+
 export default Weather;
+      {/* Weather info display */}
