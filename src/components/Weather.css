@@ -1,0 +1,141 @@
+/* Main container for the weather app */
+.weather-container {
+  max-width: 400px;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  text-align: center;
+  color: white;
+}
+  
+/* Search form styling */
+form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+  
+/* Input box styling */
+input[type='text'] {
+  padding: 15px;
+  width: 100%;
+  border: none;
+  border-radius: 25px;
+  outline: none;
+  font-size: 16px;
+  padding-right: 100px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+/* Placeholder text color */
+input[type='text']::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+  
+/* Search button styling */
+button {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  bottom: 5px;
+  padding: 0 20px;
+  border: none;
+  background: #fff;
+  color: #2193b0;
+  cursor: pointer;
+  border-radius: 20px;
+  font-weight: 600;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Button hover effect */
+button:hover {
+  background: #2193b0;
+  color: #fff;
+}
+  
+/* Suggestions dropdown styling */
+.suggestions {
+  list-style: none;
+  padding: 0;
+  margin: -10px 0 20px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+}
+  
+/* Each suggestion item */
+.suggestions li {
+  padding: 15px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+  
+/* Suggestion hover effect */
+.suggestions li:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+  
+/* Error message styling */
+.error {
+  color: #ffdddd;
+  margin-top: 20px;
+  background: rgba(255, 0, 0, 0.2);
+  padding: 10px;
+  border-radius: 10px;
+}
+  
+/* Weather info container */
+.weather-info {
+  margin-top: 20px;
+}
+
+/* City name styling */
+.weather-info h2 {
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+  
+/* Main weather row (icon + temp) */
+.weather-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+  
+/* Temperature text */
+.temperature {
+  font-size: 80px;
+  font-weight: 700;
+  margin-left: 10px;
+}
+  
+/* Weather description */
+.weather-info > p {
+  text-transform: capitalize;
+  font-size: 20px;
+  margin-top: -10px;
+}
+
+/* Weather details row (humidity, wind) */
+.weather-details {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 30px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 20px;
+  border-radius: 15px;
+}
+
+/* Weather details text */
+.weather-details p {
+  font-size: 16px;
+}
+  
